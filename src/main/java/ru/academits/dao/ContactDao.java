@@ -57,7 +57,6 @@ public class ContactDao {
                     filteredResults.add(contact);
                 }
             }
-
             return filteredResults;
         } else {
             return contactList;
@@ -67,7 +66,6 @@ public class ContactDao {
     public Contact add(Contact contact) {
         contact.setId(getNewId());
         contactList.add(contact);
-
         return contact;
     }
 
