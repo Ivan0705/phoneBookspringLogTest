@@ -22,7 +22,7 @@ public class DeleteRandomContactScheduler {
 
         if (randomId != null) {
             contactDao.remove(randomId);
-            logger.info("Deleted contact with id {}", randomId);
+            logger.info("Deleted contact");
         }
     }
 }

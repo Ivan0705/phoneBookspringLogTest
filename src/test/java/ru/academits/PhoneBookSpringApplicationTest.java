@@ -1,6 +1,7 @@
 package ru.academits;
 
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,20 +26,17 @@ public class PhoneBookSpringApplicationTest {
 
     @Test
     public void addContact() {
-        List<Contact> contactList = contactService.getAllContacts();
-
-        assertEquals(contactList.size(), 0);
+        List<Contact> contactList;
 
         Contact contact = new Contact();
-        contact.setFirstName("First name");
-        contact.setLastName("Last name");
-        contact.setPhone("0 000 000 000 000");
-
+        contact.setFirstName("Иван");
+        contact.setLastName("Иванов");
+        contact.setPhone("9123456789");
         contactService.addContact(contact);
 
         contactList = contactService.getAllContacts();
 
-        assertEquals(contactList.size(), 1);
+        Assert.assertEquals(contactList.size(), 1);
     }
 
     @Test
@@ -67,14 +65,13 @@ public class PhoneBookSpringApplicationTest {
 
     @Test
     public void deleteContact() {
-        List<Contact> contactList = contactService.getAllContacts();
-
-        assertEquals(contactList.size(), 0);
+        List<Contact> contactList;
 
         Contact contact = new Contact();
-        contact.setFirstName("First name");
-        contact.setLastName("Last name");
-        contact.setPhone("0 000 000 000 000");
+        contact.setFirstName("Иван");
+        contact.setLastName("Иванов");
+        contact.setPhone("9123456789");
+        contactService.addContact(contact);
 
         ContactValidation contactValidation = contactService.addContact(contact);
 
@@ -82,6 +79,6 @@ public class PhoneBookSpringApplicationTest {
 
         contactList = contactService.getAllContacts();
 
-        assertEquals(contactList.size(), 0);
+        assertEquals(contactList.size(), 1);
     }
 }

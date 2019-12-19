@@ -7,7 +7,6 @@ import org.springframework.util.StringUtils;
 import ru.academits.dao.ContactDao;
 import ru.academits.model.Contact;
 import ru.academits.model.ContactValidation;
-import ru.academits.schedule.DeleteRandomContactScheduler;
 
 import java.util.List;
 
@@ -27,9 +26,11 @@ public class ContactService {
         List<Contact> contactList = contactDao.getAllContacts(null);
         for (Contact contact : contactList) {
             if (contact.getPhone().equals(phone)) {
+                logger.info("The telephone numbers are identical{}", contact.getPhone());
                 return true;
             }
         }
+        logger.info("The telephone numbers are different");
         return false;
     }
 
@@ -39,24 +40,28 @@ public class ContactService {
         if (StringUtils.isEmpty(contact.getFirstName())) {
             contactValidation.setValid(false);
             contactValidation.setError("Поле Имя должно быть заполнено.");
+            logger.info("Validated contact with id{}", contact.getFirstName());
             return contactValidation;
         }
 
         if (StringUtils.isEmpty(contact.getLastName())) {
             contactValidation.setValid(false);
             contactValidation.setError("Поле Фамилия должно быть заполнено.");
+            logger.info("Validated contact with id{}", contact.getLastName());
             return contactValidation;
         }
 
         if (StringUtils.isEmpty(contact.getPhone())) {
             contactValidation.setValid(false);
             contactValidation.setError("Поле Телефон должно быть заполнено.");
+            logger.info("Validated contact with id{}", contact.getPhone());
             return contactValidation;
         }
 
         if (isExistContactWithPhone(contact.getPhone())) {
             contactValidation.setValid(false);
             contactValidation.setError("Номер телефона не должен дублировать другие номера в телефонной книге.");
+            logger.info("Checked contact with id{}", contact.getPhone());
             return contactValidation;
         }
         return contactValidation;
@@ -67,7 +72,6 @@ public class ContactService {
         if (contactValidation.isValid()) {
             contact = contactDao.add(contact);
             contactValidation.setId(contact.getId());
-
             logger.info("Added contact with id {}", contact.getId());
         }
         return contactValidation;
@@ -80,7 +84,7 @@ public class ContactService {
     }
 
     public List<Contact> getAllContacts() {
-        logger.info("Get list of contact");
+        logger.info("Get list of contacts");
         return contactDao.getAll();
     }
 
